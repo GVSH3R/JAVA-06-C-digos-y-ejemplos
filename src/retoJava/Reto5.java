@@ -1,5 +1,6 @@
 package retoJava;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Reto5 {
@@ -14,6 +15,9 @@ public class Reto5 {
         String password = sc.nextLine();
 
         if (usuario.equals("admin") && password.equals("1234")) {
+            double saldo = 1000.0; // saldo inicial
+            ArrayList<String> movimientos = new ArrayList<>();
+
             int opcion;
             do {
                 System.out.println("\n---Menú Bancario ---");
@@ -29,16 +33,35 @@ public class Reto5 {
 
                 switch (opcion) {
                     case 1:
-                        System.out.println("Tu saldo es de: 1000");
+                        System.out.printf("Tu saldo actual es: $%.2f%n", saldo);
                         break;
                     case 2:
-                        System.out.println("Haz ingresado dinero.");
+                        System.out.print("Ingresa la cantidad a depositar: ");
+                        double deposito = sc.nextDouble();
+                        saldo += deposito;
+                        movimientos.add("Depósito: $" + deposito);
+                        System.out.println("Has depositado $" + deposito);
                         break;
                     case 3:
-                        System.out.println("Haz retirado dinero");
+                        System.out.print("Ingresa la cantidad a retirar: ");
+                        double retiro = sc.nextDouble();
+                        if (retiro <= saldo) {
+                            saldo -= retiro;
+                            movimientos.add("Retiro: $" + retiro);
+                            System.out.println("Has retirado $" + retiro);
+                        } else {
+                            System.out.println("Fondos insuficientes.");
+                        }
                         break;
                     case 4:
-                        System.out.println("últimos movimientos: Depósito de $500");
+                        System.out.println("Últimos movimientos:");
+                        if (movimientos.isEmpty()) {
+                            System.out.println("No hay movimientos registrados.");
+                        } else {
+                            for (String mov : movimientos) {
+                                System.out.println(mov);
+                            }
+                        }
                         break;
                     case 5:
                         System.out.println("Seleccione la conversión: ");
@@ -56,9 +79,9 @@ public class Reto5 {
                         double resultado = 0;
 
                         // Tasas de ejemplo
-                        double tasaMXN_USD = 0.055; // 1 MXN = 0.055 USD
-                        double tasaMXN_EUR = 0.050; // 1 MXN = 0.050 EUR
-                        double tasaUSD_EUR = 0.90;  // 1 USD = 0.90 EUR
+                        double tasaMXN_USD = 0.06; // 1 MXN = 0.06 USD
+                        double tasaMXN_EUR = 0.05; // 1 MXN = 0.05 EUR
+                        double tasaUSD_EUR = 0.86;  // 1 USD = 0.86 EUR
 
                         switch (conversion) {
                             case 1:
